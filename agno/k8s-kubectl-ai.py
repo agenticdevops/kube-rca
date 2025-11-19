@@ -9,6 +9,7 @@ from agno.tools.mcp import MCPTools
 #from agno.models.ollama import Ollama
 from mcp import ClientSession, StdioServerParameters
 from agno.models.google import Gemini
+#from agno.models.azure import AzureOpenAI
 
 async def run_agent(message: str) -> None:
     """Run the filesystem agent with the given message."""
@@ -19,6 +20,7 @@ async def run_agent(message: str) -> None:
     async with MCPTools(f"kubectl-ai --mcp-server") as mcp_tools:
         agent = Agent(
             #model=Ollama(id="mistral:latest"),
+            #model=AzureOpenAI(id="gpt-5-mini")
             model=Gemini(id="gemini-2.0-flash"),
             tools=[mcp_tools],
             instructions=dedent("""\
@@ -47,4 +49,4 @@ async def run_agent(message: str) -> None:
 # Example usage
 if __name__ == "__main__":
     # Basic example - exploring project license
-    asyncio.run(run_agent("List all pods in default namespace, find out the root cause if any pod is failing"))
+    asyncio.run(run_agent("List all pods in atharva-ml namespace, find out the root cause if any pod is failing"))
