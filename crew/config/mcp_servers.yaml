@@ -1,0 +1,60 @@
+# MCP Server Configuration
+
+servers:
+  kubernetes:
+    enabled: true
+    type: npx
+    command: npx
+    args:
+      - "-y"
+      - "kubernetes-mcp-server@latest"
+      - "--kubeconfig"
+      - "${KUBECONFIG:-~/.kube/config}"
+    env: {}
+    description: "Kubernetes cluster access and operations"
+
+  prometheus:
+    enabled: true
+    type: docker
+    command: docker
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-e"
+      - "PROMETHEUS_URL=${PROMETHEUS_URL:-http://localhost:9090}"
+      - "ghcr.io/pab1it0/prometheus-mcp-server:latest"
+    description: "Prometheus metrics querying"
+
+  # Future integrations (disabled by default)
+  loki:
+    enabled: false
+    type: docker
+    command: docker
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-e"
+      - "LOKI_URL=${LOKI_URL:-http://localhost:3100}"
+      - "loki-mcp-server:latest"  # Placeholder
+    description: "Loki log aggregation"
+
+  jaeger:
+    enabled: false
+    type: docker
+    command: docker
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-e"
+      - "JAEGER_URL=${JAEGER_URL:-http://localhost:16686}"
+      - "jaeger-mcp-server:latest"  # Placeholder
+    description: "Jaeger distributed tracing"
+
+# Connection settings
+connection:
+  timeout: 30
+  retry_attempts: 3
+  retry_delay: 2

@@ -1,0 +1,58 @@
+# Model Configuration for K8s RCA Crew
+# Switch between different LLM providers easily
+
+models:
+  # Google Gemini (Default)
+  gemini-pro:
+    provider: google
+    model_name: gemini-2.0-flash
+    temperature: 0.1
+    max_tokens: 8192
+    api_key_env: GOOGLE_API_KEY
+
+  gemini-flash:
+    provider: google
+    model_name: gemini-2.0-flash
+    temperature: 0.1
+    max_tokens: 8192
+    api_key_env: GOOGLE_API_KEY
+
+  # Anthropic Claude
+  claude-sonnet:
+    provider: anthropic
+    model_name: claude-3-5-sonnet-20241022
+    temperature: 0.1
+    max_tokens: 8192
+    api_key_env: ANTHROPIC_API_KEY
+
+  claude-opus:
+    provider: anthropic
+    model_name: claude-3-opus-20240229
+    temperature: 0.1
+    max_tokens: 4096
+    api_key_env: ANTHROPIC_API_KEY
+
+  # OpenAI
+  gpt-4:
+    provider: openai
+    model_name: gpt-4-turbo-preview
+    temperature: 0.1
+    max_tokens: 4096
+    api_key_env: OPENAI_API_KEY
+
+  gpt-4o:
+    provider: openai
+    model_name: gpt-4o
+    temperature: 0.1
+    max_tokens: 4096
+    api_key_env: OPENAI_API_KEY
+
+# Default model to use (can be overridden by DEFAULT_MODEL env var)
+default: gemini-pro
+
+# Agent-specific model assignments (optional)
+# Allows different agents to use different models
+agent_models:
+  diagnostic_agent: gemini-pro
+  triage_agent: gemini-flash
+  analysis_agent: gemini-pro
